@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <title>peMusic</title>
 </head>
@@ -90,26 +91,30 @@
         <div class="music-info">
             <img src="covers/music1.jpg" id="cover">
             <div>
-                <p id="music-title">Nome da Música</p>
-                <p id="music-artist">Artista</p>
+                <p id="player-title">Nome da música</p>
+                <p id="player-artist">Artista</p>
             </div>
+
         </div>
+
         <div class="controls">
-            <button>
+            <button id="prev">
                 <i class="fa-solid fa-backward"></i>
             </button>
-            <button>
+            <button id="play">
                 <i class="fa-solid fa-play"></i>
             </button>
-            <button>
+            <button id="next">
                 <i class="fa-solid fa-forward"></i>
             </button>
         </div>
+
         <div class="progress">
-            <span>0:00</span>
-            <input type="range" value="0">
-            <span>3:00</span>
+            <span id="current-time">0:00</span>
+            <input type="range" id="progress-bar" min="0" max="100" value="0">
+            <span id="duration">3:20</span>
         </div>
     </footer>
+    <audio id="audio-player"></audio>
 </body>
 </html>
