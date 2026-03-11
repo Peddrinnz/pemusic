@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>peMusic</title>
+</head>
+
+<body>
+
+<div class="container">
+    <aside class="sidebar">
+        <h2>peMusic</h2>
+
+        <nav>
+            <ul>
+                <li>🏠 Home</li>
+                <li>🔎 Buscar</li>
+                <li>📃 Playlists</li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="main">
+
+        <h1>Suas músicas</h1>
+
+        <div class="music-list">
+
+            <div class="music-card">
+                <img src="covers/music1.jpg">
+                <h3>Nome da Música</h3>
+                <p>Artista</p>
+                <button class="play-btn">▶️</button>
+            </div>
+
+            <div class="music-card">
+                <img src="covers/music2.jpg">
+                <h3>Outra Música</h3>
+                <p>Artista</p>
+                <button class="play-btn">▶️</button>
+            </div>
+
+            <div class="music-card">
+                <img src="covers/music3.jpg">
+                <h3>Mais uma Música</h3>
+                <p>Artista</p>
+                <button class="play-btn">▶️</button>
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+<footer class="player">
+
+    <div class="music-info">
+        <img src="covers/music1.jpg" id="cover">
+        <div>
+            <p id="music-title">Nome da Música</p>
+            <p id="music-artist">Artista</p>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button id="prev">⏮</button>
+        <button id="play">▶</button>
+        <button id="next">⏭</button>
+    </div>
+
+    <div class="progress">
+        <span>0:00</span>
+        <input type="range" value="0">
+        <span>3:00</span>
+    </div>
+
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
