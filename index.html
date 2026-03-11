@@ -39,40 +39,54 @@
         </aside>
 
         <main class="main">
-
             <h1>Suas músicas</h1>
-
             <div class="music-list">
-
                 <div class="music-card">
-                    <img src="covers/music1.jpg">
-                    <h3>Nome da Música</h3>
-                    <p>Artista</p>
-                    <button class="play-btn">▶️</button>
+                    <img src="covers/music1.jpg" alt="Capa da música">
+                    <h3 class="music-title">Nome da Música</h3>
+                    <p class="music-artist">Artista</p>
+                    <div class="music-buttons">
+                        <button class="play-btn">
+                            <i class="fa-solid fa-play"></i>
+                        </button>
+                        <button class="fav-btn">
+                            <i class="fa-regular fa-heart"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="music-card">
-                    <img src="covers/music2.jpg">
-                    <h3>Outra Música</h3>
-                    <p>Artista</p>
-                    <button class="play-btn">▶️</button>
+                    <img src="covers/music2.jpg" alt="Capa da música">
+                    <h3 class="music-title">Outra Música</h3>
+                    <p class="music-artist">Artista</p>
+                    <div class="music-buttons">
+                        <button class="play-btn">
+                            <i class="fa-solid fa-play"></i>
+                        </button>
+                        <button class="fav-btn">
+                            <i class="fa-regular fa-heart"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="music-card">
-                    <img src="covers/music3.jpg">
-                    <h3>Mais uma Música</h3>
-                    <p>Artista</p>
-                    <button class="play-btn">▶️</button>
+                    <img src="covers/music3.jpg" alt="Capa da música">
+                    <h3 class="music-title">Mais uma Música</h3>
+                    <p class="music-artist">Artista</p>
+                    <div class="music-buttons">
+                        <button class="play-btn">
+                            <i class="fa-solid fa-play"></i>
+                        </button>
+                        <button class="fav-btn">
+                            <i class="fa-regular fa-heart"></i>
+                        </button>
+                    </div>
                 </div>
-
             </div>
-
         </main>
-
     </div>
 
     <footer class="player">
-
         <div class="music-info">
             <img src="covers/music1.jpg" id="cover">
             <div>
@@ -80,23 +94,22 @@
                 <p id="music-artist">Artista</p>
             </div>
         </div>
-
         <div class="controls">
-            <button id="prev">⏮</button>
-            <button id="play">▶</button>
-            <button id="next">⏭</button>
+            <button>
+                <i class="fa-solid fa-backward"></i>
+            </button>
+            <button>
+                <i class="fa-solid fa-play"></i>
+            </button>
+            <button>
+                <i class="fa-solid fa-forward"></i>
+            </button>
         </div>
-
         <div class="progress">
             <span>0:00</span>
             <input type="range" value="0">
             <span>3:00</span>
         </div>
-
     </footer>
-
-    <script src="script.js"></script>
-
 </body>
-
 </html>
