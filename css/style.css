@@ -1,0 +1,243 @@
+/* root */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #0b0b12;
+    --card: #14141f;
+    --hover: #1c1c2b;
+    --primary: #7c3aed;
+    --primary-light: #a78bfa;
+    --text: #ffffff;
+    --text-secondary: #a1a1aa;
+}
+
+/* body */
+body {
+    background: radial-gradient(circle at top, #151528, #0b0b12);
+    color: var(--text);
+    font-family: Arial, sans-serif;
+}
+
+/* auth login */
+
+.auth-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-form {
+    background: var(--card);
+    padding: 40px;
+    border-radius: 16px;
+    width: 350px;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(124, 58, 237, 0.15);
+}
+
+/* Logo */
+.logo h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    background: linear-gradient(45deg, #7c3aed, #a78bfa);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* title */
+.auth-form h2 {
+    margin-bottom: 20px;
+}
+
+/* inputs */
+.auth-form input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: none;
+    background: #0f0f1a;
+    color: white;
+}
+
+/* button */
+.auth-form button {
+    width: 100%;
+    padding: 12px;
+    background: var(--primary);
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.auth-form button:hover {
+    background: var(--primary-light);
+    transform: scale(1.02);
+}
+
+/* link */
+.auth-form a {
+    color: var(--text-secondary);
+    font-size: 14px;
+    text-decoration: none;
+}
+
+/* Index layout */
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 240px;
+    background: #09090f;
+    padding: 25px;
+}
+
+.sidebar h2 {
+    margin-bottom: 30px;
+    color: var(--primary);
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-secondary);
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.sidebar li:hover {
+    color: var(--primary);
+}
+
+/* main */
+.main {
+    flex: 1;
+    padding: 30px;
+}
+
+/* Music cards */
+
+.music-list {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.music-card {
+    background: var(--card);
+    padding: 15px;
+    border-radius: 12px;
+    width: 180px;
+    transition: 0.3s;
+}
+
+.music-card:hover {
+    background: var(--hover);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(124, 58, 237, 0.2);
+}
+
+.music-card img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.music-title {
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+.music-artist {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+/* buttons style */
+.music-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.music-buttons button {
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.2s;
+}
+
+.music-buttons button:hover {
+    color: var(--primary);
+}
+
+/* player */
+
+.player {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #11111a;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #1f1f2e;
+}
+
+/* info */
+.music-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.music-info img {
+    width: 50px;
+    border-radius: 5px;
+}
+
+/* controls */
+.controls button {
+    background: none;
+    border: none;
+    color: white;
+    margin: 0 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.2s;
+}
+
+.controls button:hover {
+    color: var(--primary);
+}
+
+/* progress bar */
+.progress {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.progress input {
+    width: 150px;
+}
