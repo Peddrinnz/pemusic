@@ -217,6 +217,19 @@ body {
     color: var(--primary);
 }
 
+.playlist-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.2s;
+}
+
+.playlist-btn:hover {
+    color: #22d3ee;
+}
+
 /* player */
 
 .player {

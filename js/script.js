@@ -39,14 +39,17 @@ const cards = document.querySelectorAll(".music-card")
 const titles = document.querySelectorAll(".music-title")
 const artists = document.querySelectorAll(".music-artist")
 const favButtons = document.querySelectorAll(".fav-btn")
+const playlistButtons = document.querySelectorAll(".playlist-btn")
+const btnPlaylists = document.getElementById("btn-playlists")
 const btnFavorites = document.getElementById("btn-favorites")
 const btnHome = document.getElementById("btn-home")
 const btnSearch = document.getElementById("btn-search")
 const searchInput = document.getElementById("search-input")
 
 let favorites = JSON.parse(localStorage.getItem("favorites")) || []
+let playlist = JSON.parse(localStorage.getItem("playlist")) || []
 let currentSong = 0
-let activeFilter = "all" // allowed: all, favorites
+let activeFilter = "all"
 let searchQuery = ""
 
 /* populate cards */
@@ -143,7 +146,7 @@ function formatTime(time) {
     return `${min}:${sec < 10 ? "0" : ""}${sec}`
 }
 
-/* fav */
+/* fav + playlist */
 
 function updateFavoriteIcons() {
     favButtons.forEach((btn, index) => {
@@ -151,6 +154,16 @@ function updateFavoriteIcons() {
             btn.innerHTML = '<i class="fa-solid fa-heart"></i>'
         } else {
             btn.innerHTML = '<i class="fa-regular fa-heart"></i>'
+        }
+    })
+}
+
+function updatePlaylistIcons() {
+    playlistButtons.forEach((btn, index) => {
+        if (playlist.includes(index)) {
+            btn.innerHTML = '<i class="fa-solid fa-minus"></i>'
+        } else {
+            btn.innerHTML = '<i class="fa-solid fa-plus"></i>'
         }
     })
 }
@@ -175,12 +188,34 @@ favButtons.forEach((btn, index) => {
     })
 })
 
+playlistButtons.forEach((btn, index) => {
+    if (playlist.includes(index)) {
+        btn.innerHTML = '<i class="fa-solid fa-circle-minus"></i>'
+    }
+
+    btn.addEventListener("click", (e) => {
+        e.stopPropagation()
+
+        if (playlist.includes(index)) {
+            playlist = playlist.filter(i => i !== index)
+        } else {
+            playlist.push(index)
+        }
+
+        localStorage.setItem("playlist", JSON.stringify(playlist))
+        updatePlaylistIcons()
+        filterAndRenderCards()
+    })
+})
+
 function filterAndRenderCards() {
     cards.forEach((card, index) => {
         const titleMatch = songs[index].title.toLowerCase().includes(searchQuery)
         const artistMatch = songs[index].artist.toLowerCase().includes(searchQuery)
         const matchSearch = !searchQuery || titleMatch || artistMatch
-        const matchesFilter = activeFilter !== "favorites" || favorites.includes(index)
+        const matchesFavorites = activeFilter !== "favorites" || favorites.includes(index)
+        const matchesPlaylist = activeFilter !== "playlist" || playlist.includes(index)
+        const matchesFilter = matchesFavorites && matchesPlaylist
 
         card.style.display = matchSearch && matchesFilter ? "flex" : "none"
     })
@@ -209,6 +244,11 @@ function showFavoritesOnly() {
     filterAndRenderCards()
 }
 
+function showPlaylistOnly() {
+    activeFilter = "playlist"
+    filterAndRenderCards()
+}
+
 function showAllSongs() {
     activeFilter = "all"
     searchQuery = ""
@@ -222,6 +262,10 @@ function showAllSongs() {
 
 if (btnFavorites) {
     btnFavorites.addEventListener("click", showFavoritesOnly)
+}
+
+if (btnPlaylists) {
+    btnPlaylists.addEventListener("click", showPlaylistOnly)
 }
 
 if (btnHome) {
