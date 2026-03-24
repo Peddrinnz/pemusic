@@ -29,16 +29,28 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 20px;
 }
 
 .auth-form {
     background: var(--card);
     padding: 40px;
     border-radius: 16px;
-    width: 350px;
+    width: min(350px, 100%);
     text-align: center;
     box-shadow: 0 0 40px rgba(124, 58, 237, 0.15);
 }
+
+.auth-form input,
+.auth-form button,
+.auth-form a {
+    width: 100%;
+}
+
+.auth-form button {
+    margin-top: 8px;
+}
+
 
 /* Logo */
 .logo h1 {
