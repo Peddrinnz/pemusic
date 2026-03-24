@@ -16,12 +16,12 @@
             <h2>peMusic</h2>
             <nav>
                 <ul>
-                    <li>
+                    <li id="btn-home">
                         <i class="fa-solid fa-house"></i>
                         Home
                     </li>
 
-                    <li>
+                    <li id="btn-search">
                         <i class="fa-solid fa-magnifying-glass"></i>
                         Buscar
                     </li>
@@ -31,7 +31,7 @@
                         Playlists
                     </li>
 
-                    <li>
+                    <li id="btn-favorites">
                         <i class="fa-solid fa-heart"></i>
                         Favoritos
                     </li>
@@ -41,49 +41,55 @@
 
         <main class="main">
             <h1>Suas músicas</h1>
+            <input id="search-input" type="search" placeholder="Buscar título ou artista" style="width:100%; padding:8px 12px; margin-bottom:15px; border-radius:8px; border:1px solid #333; background:#0f0f1a; color:white;" />
             <div class="music-list">
-                <div class="music-card">
-                    <img src="covers/music1.jpg" alt="Capa da música">
-                    <h3 class="music-title">Nome da Música</h3>
-                    <p class="music-artist">Artista</p>
-                    <div class="music-buttons">
-                        <button class="play-btn">
-                            <i class="fa-solid fa-play"></i>
-                        </button>
-                        <button class="fav-btn">
-                            <i class="fa-regular fa-heart"></i>
-                        </button>
-                    </div>
-                </div>
 
-                <div class="music-card">
-                    <img src="covers/music2.jpg" alt="Capa da música">
-                    <h3 class="music-title">Outra Música</h3>
-                    <p class="music-artist">Artista</p>
-                    <div class="music-buttons">
-                        <button class="play-btn">
-                            <i class="fa-solid fa-play"></i>
-                        </button>
-                        <button class="fav-btn">
-                            <i class="fa-regular fa-heart"></i>
-                        </button>
-                    </div>
-                </div>
+    <div class="music-card">
+        <img src="covers/music1.jpg" alt="Capa da música">
+        <h3 class="music-title"></h3>
+        <p class="music-artist"></p>
 
-                <div class="music-card">
-                    <img src="covers/music3.jpg" alt="Capa da música">
-                    <h3 class="music-title">Mais uma Música</h3>
-                    <p class="music-artist">Artista</p>
-                    <div class="music-buttons">
-                        <button class="play-btn">
-                            <i class="fa-solid fa-play"></i>
-                        </button>
-                        <button class="fav-btn">
-                            <i class="fa-regular fa-heart"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
+        <div class="music-buttons">
+            <button class="play-btn">
+                <i class="fa-solid fa-play"></i>
+            </button>
+            <button class="fav-btn">
+                <i class="fa-regular fa-heart"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="music-card">
+        <img src="covers/music2.jpg" alt="Capa da música">
+        <h3 class="music-title"></h3>
+        <p class="music-artist"></p>
+
+        <div class="music-buttons">
+            <button class="play-btn">
+                <i class="fa-solid fa-play"></i>
+            </button>
+            <button class="fav-btn">
+                <i class="fa-regular fa-heart"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="music-card">
+        <img src="covers/music3.jpg" alt="Capa da música">
+        <h3 class="music-title"></h3>
+        <p class="music-artist"></p>
+
+        <div class="music-buttons">
+            <button class="play-btn">
+                <i class="fa-solid fa-play"></i>
+            </button>
+            <button class="fav-btn">
+                <i class="fa-regular fa-heart"></i>
+            </button>
+        </div>
+    </div>
+
+</div>
         </main>
     </div>
 
