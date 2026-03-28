@@ -19,13 +19,62 @@ document.addEventListener('DOMContentLoaded', async () => {
     const btnHome = document.getElementById('btn-home')
     const btnSearch = document.getElementById('btn-search')
     const searchInput = document.getElementById('search-input')
+    const pageTitle = document.getElementById('page-title')
     const userGreeting = document.getElementById('user-greeting')
     const logoutBtn = document.getElementById('logout')
     const volumeBar = document.getElementById('volume-bar')
 
-    let favorites = JSON.parse(localStorage.getItem('favorites')) || []
-    let playlist = JSON.parse(localStorage.getItem('playlist')) || []
-    let songs = []
+    function normalizeStoredSongs(storedValue) {
+        if (!Array.isArray(storedValue)) return []
+        return storedValue.map((entry) => {
+            if (entry && typeof entry === 'object' && entry.id) {
+                return entry
+            }
+            return { id: entry }
+        })
+    }
+
+    function getSongIds(list) {
+        return list.map((item) => item.id).filter(Boolean)
+    }
+
+    function getDisplaySongs() {
+        if (activeFilter === 'favorites') return favorites
+        if (activeFilter === 'playlist') return playlist
+        return searchResults
+    }
+
+    function buildSongMap(...lists) {
+        const songMap = new Map()
+        lists.flat().forEach((song) => {
+            if (song && song.id) {
+                const existing = songMap.get(song.id)
+                if (!existing || (song.title && song.artist)) {
+                    songMap.set(song.id, { ...existing, ...song })
+                }
+            }
+        })
+        return songMap
+    }
+
+    function enrichSavedSongs(savedSongs, lookupMap) {
+        return savedSongs.map((song) => {
+            if (!song || !song.id) return song
+            return lookupMap.get(song.id) || song
+        })
+    }
+
+    function updatePageTitle(filter) {
+        if (!pageTitle) return
+        if (filter === 'favorites') pageTitle.textContent = 'Favoritos'
+        else if (filter === 'playlist') pageTitle.textContent = 'Playlists'
+        else if (filter === 'search') pageTitle.textContent = 'Buscar'
+        else pageTitle.textContent = 'Suas músicas'
+    }
+
+    let favorites = normalizeStoredSongs(JSON.parse(localStorage.getItem('favorites')) || [])
+    let playlist = normalizeStoredSongs(JSON.parse(localStorage.getItem('playlist')) || [])
+    let searchResults = []
     let activeFilter = 'all'
     let searchQuery = ''
     let searchTimeout = null
@@ -47,12 +96,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     player.setOptions({
         onNext: () => {
-            const visible = getVisibleSongEntries(songs, { searchQuery, activeFilter, favorites, playlist }).map((item) => item.index)
+            const visible = getVisibleSongEntries(getDisplaySongs(), { searchQuery, activeFilter, favorites: getSongIds(favorites), playlist: getSongIds(playlist) }).map((item) => item.index)
             player.nextSong(visible)
             render()
         },
         onPrevious: () => {
-            const visible = getVisibleSongEntries(songs, { searchQuery, activeFilter, favorites, playlist }).map((item) => item.index)
+            const visible = getVisibleSongEntries(getDisplaySongs(), { searchQuery, activeFilter, favorites: getSongIds(favorites), playlist: getSongIds(playlist) }).map((item) => item.index)
             player.previousSong(visible)
             render()
         },
@@ -93,37 +142,43 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function render() {
-        renderSongCards(musicList, songs, {
+        const displaySongs = getDisplaySongs()
+        const favoritesIds = getSongIds(favorites)
+        const playlistIds = getSongIds(playlist)
+
+        player.setSongs(displaySongs)
+
+        renderSongCards(musicList, displaySongs, {
             searchQuery,
             activeFilter,
-            favorites,
-            playlist,
+            favorites: favoritesIds,
+            playlist: playlistIds,
             currentSong: player.getCurrentSong(),
         }, {
-            onSelect: (index) => {
-                player.loadSong(index)
+            onSelect: (song, index) => {
+                player.loadSong(song)
                 player.play()
                 highlightActiveCard(musicList, index)
             },
             onPlay: () => player.play(),
-            onToggleFavorite: (index) => {
-                const song = songs[index]
+            onToggleFavorite: (song) => {
                 if (!song) return
-                if (favorites.includes(song.id)) {
-                    favorites = favorites.filter((id) => id !== song.id)
+                const alreadyFavorite = favorites.some((item) => item.id === song.id)
+                if (alreadyFavorite) {
+                    favorites = favorites.filter((item) => item.id !== song.id)
                 } else {
-                    favorites.push(song.id)
+                    favorites.push(song)
                 }
                 saveFavorites()
                 render()
             },
-            onTogglePlaylist: (index) => {
-                const song = songs[index]
+            onTogglePlaylist: (song) => {
                 if (!song) return
-                if (playlist.includes(song.id)) {
-                    playlist = playlist.filter((id) => id !== song.id)
+                const alreadyInPlaylist = playlist.some((item) => item.id === song.id)
+                if (alreadyInPlaylist) {
+                    playlist = playlist.filter((item) => item.id !== song.id)
                 } else {
-                    playlist.push(song.id)
+                    playlist.push(song)
                 }
                 savePlaylist()
                 render()
@@ -137,16 +192,23 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         try {
-            songs = await searchDeezer(query)
-            player.setSongs(songs)
+            searchResults = await searchDeezer(query)
 
-            if (songs.length > 0) {
-                player.loadSong(0)
-            } else {
-                if (titleEl) titleEl.textContent = 'Nenhuma música encontrada'
-                if (artistEl) artistEl.textContent = ''
-                if (coverEl) coverEl.src = 'covers/music1.jpg'
-                if (audio) audio.src = ''
+            const knownSongs = buildSongMap(searchResults, favorites, playlist)
+            favorites = enrichSavedSongs(favorites, knownSongs)
+            playlist = enrichSavedSongs(playlist, knownSongs)
+
+            if (activeFilter === 'all') {
+                player.setSongs(searchResults)
+
+                if (searchResults.length > 0) {
+                    player.loadSong(0)
+                } else {
+                    if (titleEl) titleEl.textContent = 'Nenhuma música encontrada'
+                    if (artistEl) artistEl.textContent = ''
+                    if (coverEl) coverEl.src = 'covers/music1.jpg'
+                    if (audio) audio.src = ''
+                }
             }
 
             render()
@@ -157,8 +219,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    function updateFilter(filter) {
+    function updateFilter(filter, titleLabel) {
         activeFilter = filter
+        updatePageTitle(titleLabel || filter)
         render()
     }
 
@@ -175,6 +238,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             activeFilter = 'all'
             searchQuery = ''
             if (searchInput) searchInput.value = ''
+            updatePageTitle('all')
             searchAndRender('pop')
         })
     }
@@ -182,7 +246,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (btnSearch) {
         btnSearch.addEventListener('click', () => {
             if (searchInput) searchInput.focus()
-            activeFilter = 'all'
+            updateFilter('all', 'search')
         })
     }
 
@@ -190,6 +254,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         searchInput.addEventListener('input', (event) => {
             searchQuery = event.target.value.trim()
             activeFilter = 'all'
+            updatePageTitle(searchQuery ? 'search' : 'all')
             if (searchTimeout) clearTimeout(searchTimeout)
             searchTimeout = setTimeout(() => searchAndRender(searchQuery || 'pop'), 600)
         })

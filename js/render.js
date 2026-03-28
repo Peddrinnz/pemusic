@@ -33,10 +33,14 @@ export function renderSongCards(musicList, songs, state, handlers) {
             card.classList.add("active")
         }
 
+        const coverSrc = song.cover || 'covers/music1.jpg'
+        const titleText = song.title || 'Sem título'
+        const artistText = song.artist || 'Artista desconhecido'
+
         card.innerHTML = `
-            <img src="${song.cover}" alt="Capa da música">
-            <h3 class="music-title">${song.title}</h3>
-            <p class="music-artist">${song.artist}</p>
+            <img src="${coverSrc}" alt="Capa da música">
+            <h3 class="music-title">${titleText}</h3>
+            <p class="music-artist">${artistText}</p>
             <div class="music-buttons">
                 <button class="play-btn" title="Tocar música">
                     <i class="fa-solid fa-play"></i>
@@ -54,12 +58,12 @@ export function renderSongCards(musicList, songs, state, handlers) {
         const favButton = card.querySelector(".fav-btn")
         const playlistButton = card.querySelector(".playlist-btn")
 
-        card.addEventListener("click", () => handlers.onSelect(index))
+        card.addEventListener("click", () => handlers.onSelect(song, index))
 
         if (playButton) {
             playButton.addEventListener("click", (event) => {
                 event.stopPropagation()
-                handlers.onSelect(index)
+                handlers.onSelect(song, index)
                 handlers.onPlay()
             })
         }
@@ -67,14 +71,14 @@ export function renderSongCards(musicList, songs, state, handlers) {
         if (favButton) {
             favButton.addEventListener("click", (event) => {
                 event.stopPropagation()
-                handlers.onToggleFavorite(index)
+                handlers.onToggleFavorite(song)
             })
         }
 
         if (playlistButton) {
             playlistButton.addEventListener("click", (event) => {
                 event.stopPropagation()
-                handlers.onTogglePlaylist(index)
+                handlers.onTogglePlaylist(song)
             })
         }
 

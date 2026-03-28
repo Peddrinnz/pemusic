@@ -71,9 +71,15 @@ export function createPlayer({
         state.songs = newSongs
     }
 
-    function loadSong(index) {
-        const song = state.songs[index]
+    function loadSong(indexOrSong) {
+        const song = typeof indexOrSong === 'number' ? state.songs[indexOrSong] : indexOrSong
         if (!song || !audio) return
+
+        const index = typeof indexOrSong === 'number'
+            ? indexOrSong
+            : state.songs.findIndex((item) => item.id === song.id)
+
+        if (index === -1) return
 
         state.currentSong = index
         audio.src = song.preview
