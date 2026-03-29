@@ -22,6 +22,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     const pageTitle = document.getElementById('page-title')
     const userGreeting = document.getElementById('user-greeting')
     const logoutBtn = document.getElementById('logout')
+    const menuToggle = document.getElementById('menu-toggle')
+    const sidebar = document.querySelector('.sidebar')
+    const sidebarBackdrop = document.querySelector('.sidebar-backdrop')
     const volumeBar = document.getElementById('volume-bar')
 
     function normalizeStoredSongs(storedValue) {
@@ -130,6 +133,25 @@ document.addEventListener('DOMContentLoaded', async () => {
         logoutBtn.addEventListener('click', () => {
             localStorage.removeItem('peMusicSession')
             redirectToLogin()
+        })
+    }
+
+    if (menuToggle && sidebar && sidebarBackdrop) {
+        const toggleSidebar = () => {
+            sidebar.classList.toggle('sidebar-open')
+            sidebarBackdrop.classList.toggle('active')
+        }
+
+        menuToggle.addEventListener('click', toggleSidebar)
+        sidebarBackdrop.addEventListener('click', toggleSidebar)
+
+        sidebar.querySelectorAll('li').forEach((item) => {
+            item.addEventListener('click', () => {
+                if (window.innerWidth <= 960) {
+                    sidebar.classList.remove('sidebar-open')
+                    sidebarBackdrop.classList.remove('active')
+                }
+            })
         })
     }
 

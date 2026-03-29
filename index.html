@@ -39,14 +39,20 @@
                 </ul>
             </nav>
         </aside>
+        <div class="sidebar-backdrop"></div>
 
         <main class="main">
             <div class="main-header">
-                <div>
+                <div class="header-info">
                     <h1 id="page-title">Suas músicas</h1>
                     <p id="user-greeting" class="user-greeting">Olá, seja bem-vindo!</p>
                 </div>
-                <button id="logout" class="logout-btn">Sair</button>
+                <div class="actions-row">
+                    <button id="menu-toggle" class="menu-btn" type="button" aria-label="Abrir menu">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <button id="logout" class="logout-btn">Sair</button>
+                </div>
             </div>
             <input id="search-input" class="search-input" type="search" placeholder="Buscar título ou artista" />
             <div id="music-list" class="music-list"></div>
