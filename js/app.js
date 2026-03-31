@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const sidebarBackdrop = document.querySelector('.sidebar-backdrop')
     const volumeBar = document.getElementById('volume-bar')
 
+    /* Normaliza o valor do localStorage para um array de objetos de música */
     function normalizeStoredSongs(storedValue) {
         if (!Array.isArray(storedValue)) return []
         return storedValue.map((entry) => {
@@ -37,16 +38,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         })
     }
 
+    /* Extrai apenas os ids das músicas de uma lista */
     function getSongIds(list) {
         return list.map((item) => item.id).filter(Boolean)
     }
 
+    /* Retorna o conjunto de músicas que deve ser exibido conforme o filtro ativo */
     function getDisplaySongs() {
         if (activeFilter === 'favorites') return favorites
         if (activeFilter === 'playlist') return playlist
         return searchResults
     }
 
+    /* Cria um mapa de músicas para enriquecer dados salvos em favoritos e playlist */
     function buildSongMap(...lists) {
         const songMap = new Map()
         lists.flat().forEach((song) => {
@@ -60,6 +64,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         return songMap
     }
 
+    /* Atualiza entradas salvas com dados completos quando disponíveis */
     function enrichSavedSongs(savedSongs, lookupMap) {
         return savedSongs.map((song) => {
             if (!song || !song.id) return song
@@ -67,6 +72,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         })
     }
 
+    /* Atualiza o título da página conforme o filtro exibido */
     function updatePageTitle(filter) {
         if (!pageTitle) return
         if (filter === 'favorites') pageTitle.textContent = 'Favoritos'
@@ -110,10 +116,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         },
     })
 
+    /* Redireciona o usuário para a página de login */
     function redirectToLogin() {
         window.location.href = 'login.html'
     }
 
+    /* Verifica se existe sessão ativa e atualiza o bem vindo ao usuário */
     function requireLogin() {
         if (!session) {
             redirectToLogin()
@@ -137,6 +145,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     if (menuToggle && sidebar && sidebarBackdrop) {
+        /* Alterna a visibilidade da sidebar e do backdrop */
         const toggleSidebar = () => {
             sidebar.classList.toggle('sidebar-open')
             sidebarBackdrop.classList.toggle('active')
@@ -155,14 +164,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         })
     }
 
+    /* Salva a lista de favoritos no localStorage */
     function saveFavorites() {
         localStorage.setItem('favorites', JSON.stringify(favorites))
     }
 
+    /* Salva a playlist personalizada no localStorage */
     function savePlaylist() {
         localStorage.setItem('playlist', JSON.stringify(playlist))
     }
 
+    /* Renderiza os cards de música conforme o estado atual do app */
     function render() {
         const displaySongs = getDisplaySongs()
         const favoritesIds = getSongIds(favorites)
@@ -208,6 +220,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         })
     }
 
+    /* Busca músicas na Deezer, atualiza resultados e renderiza a lista */
     async function searchAndRender(query) {
         if (musicList) {
             musicList.innerHTML = '<p class="loading">Carregando músicas...</p>'
@@ -241,6 +254,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    /* Muda o filtro de exibição e atualiza o título da pagina */
     function updateFilter(filter, titleLabel) {
         activeFilter = filter
         updatePageTitle(titleLabel || filter)

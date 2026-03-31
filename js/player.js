@@ -1,3 +1,4 @@
+/* Cria o player de áudio e gerencia seus controles e estado */
 export function createPlayer({
     audio,
     playBtn,
@@ -71,6 +72,7 @@ export function createPlayer({
         state.songs = newSongs
     }
 
+    /* Carrega uma música no elemento de áudio e atualiza os dados da interface */
     function loadSong(indexOrSong) {
         const song = typeof indexOrSong === 'number' ? state.songs[indexOrSong] : indexOrSong
         if (!song || !audio) return
@@ -88,16 +90,19 @@ export function createPlayer({
         if (coverEl) coverEl.src = song.cover
     }
 
+    /* Toca o áudio carregado */
     function play() {
         if (!audio || !audio.src) return
         audio.play()
     }
 
+    /* Pausa o áudio atual */
     function pause() {
         if (!audio) return
         audio.pause()
     }
 
+    /* Ajusta o volume do player */
     function setVolume(value) {
         if (!audio) return
         audio.volume = Math.min(1, Math.max(0, value))
@@ -115,6 +120,7 @@ export function createPlayer({
         return state.songs
     }
 
+    /* Avança para a próxima música dentro das músicas visíveis */
     function nextSong(visibleIndices) {
         if (!visibleIndices.length) return
         const currentIndex = visibleIndices.indexOf(state.currentSong)
@@ -123,6 +129,7 @@ export function createPlayer({
         play()
     }
 
+    /* Volta para a música anterior dentro das músicas visíveis */
     function previousSong(visibleIndices) {
         if (!visibleIndices.length) return
         const currentIndex = visibleIndices.indexOf(state.currentSong)
@@ -131,6 +138,7 @@ export function createPlayer({
         play()
     }
 
+    /* Formata um tempo em segundos */
     function formatTime(time) {
         const minutes = Math.floor(time / 60)
         const seconds = Math.floor(time % 60)

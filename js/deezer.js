@@ -1,3 +1,4 @@
+/* Faz uma requisição JSONP para carregar dados da API Deezer */
 export function jsonpFetch(url) {
     return new Promise((resolve, reject) => {
         const callbackName = `deezerCallback_${Date.now()}_${Math.floor(Math.random() * 100000)}`
@@ -20,6 +21,7 @@ export function jsonpFetch(url) {
     })
 }
 
+/* Busca músicas na Deezer e converte o resultado para o formato do app */
 export async function searchDeezer(query) {
     const searchTerm = query.trim() || "pop"
     const encoded = encodeURIComponent(searchTerm)

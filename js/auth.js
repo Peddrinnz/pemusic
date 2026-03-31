@@ -1,3 +1,4 @@
+/* Inicia a lógica de autenticação e prevenção de acesso quando já existe sessão */
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.querySelector(".auth-form")
     const path = window.location.pathname.toLowerCase()
@@ -14,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener("submit", (event) => {
         event.preventDefault()
 
+        /* Processa o envio do formulário para login ou cadastro */
         const data = Object.fromEntries(new FormData(form).entries())
         const email = data.email?.trim() || ""
         const password = data.password?.trim() || ""

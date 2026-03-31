@@ -1,3 +1,4 @@
+/* Filtra músicas de acordo com a busca */
 export function getVisibleSongEntries(songs, { searchQuery, activeFilter, favorites, playlist }) {
     return songs
         .map((song, index) => ({ song, index }))
@@ -14,6 +15,7 @@ export function getVisibleSongEntries(songs, { searchQuery, activeFilter, favori
         })
 }
 
+/* Cria os cards de música na interface e define eventos dos botões */
 export function renderSongCards(musicList, songs, state, handlers) {
     if (!musicList) return
 
@@ -86,6 +88,7 @@ export function renderSongCards(musicList, songs, state, handlers) {
     })
 }
 
+/* Marca a música que está sendo reproduzida */
 export function highlightActiveCard(musicList, currentSong) {
     const cards = musicList.querySelectorAll(".music-card")
     cards.forEach((card) => {
